@@ -54,7 +54,7 @@ def pridect(imagePath, pmodel):
             # 3.2 change everything to cuda and get only basename
             filepath = [os.path.basename(x) for x in filepath]
             with torch.no_grad():
-                image_var = Variable(input).cuda()
+                image_var = Variable(input)
                 # 3.3.output
                 # print(filepath)
                 # print(input,input.shape)
