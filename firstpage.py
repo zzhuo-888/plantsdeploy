@@ -16,7 +16,7 @@ from streamlit.web.server.server import Server
 import pydeck as pdk
 import altair as alt
 import plotly.figure_factory as ff
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from pyecharts.charts import *
 from pyecharts.globals import ThemeType
 from pyecharts import options as opts
