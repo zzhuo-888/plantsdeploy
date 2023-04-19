@@ -11,7 +11,18 @@ from torch.autograd import Variable
 from collections import OrderedDict
 from dataloader import *
 from torch.utils.data import DataLoader
-def pridect(imagePath, modelPath):
+import streamlit as st
+@st.cache
+def loadmodel(modelPath):
+    pmodel = get_net()
+    # model = torch.nn.DataParallel(model)
+    pmodel.cuda()
+    pmodel.eval()
+    best_model = torch.load(modelPath)
+
+    pmodel.load_state_dict(best_model["state_dict"])
+    return pmodel
+def pridect(imagePath, pmodel):
     '''
     预测函数
     :param imagePath: 图片路径
@@ -26,13 +37,7 @@ def pridect(imagePath, modelPath):
     # 3. 加载模型
     #model = torch.load(modelPath)
     #model=model.load_state_dict(model)
-    model = get_net()
-    # model = torch.nn.DataParallel(model)
-    #model.cuda()
-    model.eval()
-    #best_model=torch.load(modelPath)
-    best_model=torch.load(modelPath, map_location=lambda storage, loc: storage)
-    model.load_state_dict(best_model["state_dict"])
+
     #model = model.to(Common.device)
    # model= model.to(torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
 
@@ -49,11 +54,11 @@ def pridect(imagePath, modelPath):
             # 3.2 change everything to cuda and get only basename
             filepath = [os.path.basename(x) for x in filepath]
             with torch.no_grad():
-                image_var = Variable(input)
+                image_var = Variable(input).cuda()
                 # 3.3.output
                 # print(filepath)
                 # print(input,input.shape)
-                y_pred = model(image_var)
+                y_pred = pmodel(image_var)
                 # print(y_pred.shape)
                 smax = nn.Softmax(1)
                 smax_out = smax(y_pred)
@@ -77,4 +82,5 @@ def pridect(imagePath, modelPath):
 
 
 if __name__ == '__main__':
-    pridect("testimage.jpg","./checkpoints/best_model/resnet50/0/model_best.pth.tar")
+    #loadmodel("./checkpoints/best_model/resnet50/0/model_best.pth.tar")
+    pridect("testimage.jpg",loadmodel("./checkpoints/best_model/resnet50/0/model_best.pth.tar"))
