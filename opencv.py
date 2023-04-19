@@ -25,8 +25,8 @@ def enhance_details(img):
     im = Image.fromarray(img)
     #im = Image.open(save_path)
     im.save(save_path)
-
-    hdr=pridect("testimage.jpg", "./checkpoints/best_model/resnet50/0/model_best.pth.tar")
+    hdr=pridect("testimage.jpg",loadmodel("./checkpoints/best_model/resnet50/0/model_best.pth.tar"))
+   # hdr=pridect("testimage.jpg", "./checkpoints/best_model/resnet50/0/model_best.pth.tar")
     #hdr = cv2.detailEnhance(img, sigma_s=12, sigma_r=0.15)
     print("eee",hdr)
     return hdr
