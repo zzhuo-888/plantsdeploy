@@ -37,9 +37,11 @@ def show_slove(dname1):
         for i in res:
             r = i.strip()  # 处理每一个换行 admin:123\n ==> admin:123
             arr = r.split('#')  # admin:123 ==> ['admin','123']
-            plantlist.append(arr[0])  # 病虫害名称
-            plantinfolist.append(arr[1])
-            solvelist.append(arr[2])  # 解决措施
+            if len(arr)==3:
+                plantlist.append(arr[0])  # 病虫害名称
+                plantinfolist.append(arr[1])
+                solvelist.append(arr[2])  # 解决措施
+         
     plantinx=plantlist.index(dname1)
     #print("标号",plantinx)
     plants=[]
