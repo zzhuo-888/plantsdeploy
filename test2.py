@@ -16,10 +16,10 @@ import streamlit as st
 def loadmodel(modelPath):
     pmodel = get_net()
     # model = torch.nn.DataParallel(model)
-    pmodel.cuda()
+    #pmodel.cuda()
     pmodel.eval()
-    best_model = torch.load(modelPath)
-
+    #best_model = torch.load(modelPath)
+    best_model = torch.load(modelPath, map_location=lambda storage, loc: storage)
     pmodel.load_state_dict(best_model["state_dict"])
     return pmodel
 def pridect(imagePath, pmodel):
