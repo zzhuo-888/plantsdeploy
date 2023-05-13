@@ -22,7 +22,7 @@ def loadmodel(modelPath):
     best_model = torch.load(modelPath, map_location=lambda storage, loc: storage)
     pmodel.load_state_dict(best_model["state_dict"])
     return pmodel
-def pridect(imagePath, pmodel):
+def pridect( pmodel):
     '''
     预测函数
     :param imagePath: 图片路径
@@ -83,4 +83,4 @@ def pridect(imagePath, pmodel):
 
 if __name__ == '__main__':
     #loadmodel("./checkpoints/best_model/resnet50/0/model_best.pth.tar")
-    pridect("testimage.jpg",loadmodel("./checkpoints/best_model/resnet50/0/model_best.pth.tar"))
+    pridect(loadmodel("./checkpoints/best_model/resnet50/0/model_best.pth.tar"))
